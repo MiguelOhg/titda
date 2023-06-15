@@ -1,0 +1,108 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+     <div class="container-fluid p-4 h-100">
+         <div class="row">
+             <div class="col-md-8">
+                 {% if id == None: %}
+                    <div class="table-responsive">
+                     <table class="table table-hover table-striped">
+                         <thead class="table-primary">
+                            <tr>
+                                <th scope="col">Estudiante</th>
+                                <th scope="col">Ejercicio</th>
+                                <th scope="col">Intentos</th>
+                                <th scope="col">Intentos con errores</th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            {% for response in responses %}
+                                 <tr>
+                                     <td scope="row">{{ response.username }}</td>
+                                     <td>{{ response.name }}</td>
+                                     <td>{{ response.attempts }}</td>
+                                     <td>{{ response.errors }}</td>
+                                 </tr>
+                            {% endfor %}
+                         </tbody>
+                     </table>
+                 </div>
+                 {% else %}
+                    <div class="table-responsive">
+                     <table class="table table-hover table-striped">
+                         <thead class="table-primary">
+                            <tr>
+                                <th scope="col">Usuario</th>
+                                <th scope="col">Ejercicio</th>
+                                <th scope="col">Respuesta de Usuario</th>
+                                <th scope="col">Respuesta de TITDA</th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            {% for response in responses %}
+                                 <tr>
+                                     <td scope="row">{{ response.username }}</td>
+                                     <td>{{ response.name }}</td>
+                                     <td>
+                                         <div class="row">
+                                            {% for extended in response.extended %}
+                                             <div class="col-md-8">{{ extended.name }}</div>
+                                            {% endfor %}
+                                         </div>
+                                     </td>
+                                     <td>
+                                        <div class="row">
+                                            {% for extended in response.extended %}
+                                             <div class="col-md-8">{{ extended.response_from_its }}</div>
+                                            {% endfor %}
+                                        </div>
+                                     </td>
+                                 </tr>
+                            {% endfor %}
+                         </tbody>
+                     </table>
+                 </div>
+                 {% endif %}
+
+             </div>
+             <div class="col-md-4">
+                <div id="lineplot"></div>
+                <div id="matplotlib-lineplot"></div>
+             </div>
+        </div>
+
+         <py-script output="lineplot">
+                import matplotlib.pyplot as plt
+                import numpy as np
+
+                fig, ax = plt.subplots()
+
+                col = (np.random.random(), np.random.random(), np.random.random())
+                plt.plot({{ labels }}, {{ attempts }}, marker='o', linestyle='--', color=col, label='intentos')
+
+                plt.xlabel('Estudiantes')
+                plt.ylabel('Intentos generales')
+                plt.title('Estudiantes vs Intentos en ejercicios')
+                plt.legend(loc='lower right')
+
+                fig
+         </py-script>
+
+          <py-script output="matplotlib-lineplot">
+            import matplotlib.pyplot as plt
+            fig, ax = plt.subplots()
+            # x axis
+            x = {{ labels }}
+            # y axis
+            y = {{ errors }}
+            plt.plot(x, y, marker='o', linestyle='-', color='b', label='errores')
+            # Naming the x-label
+            plt.xlabel('Ejercicios')
+            # Naming the y-label
+            plt.ylabel('Errores generales')
+
+            plt.title('Estudiantes vs Errores')
+            fig
+          </py-script>
+    </div>
+{% endblock %}

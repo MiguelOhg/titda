@@ -1,0 +1,28 @@
+<form>
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input name="name" type="text" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Ejercicio</label>
+        <select name="exercise_id" class="form-control">
+            {% for exercise in exercises %}
+                 <option value="{{ exercise.id }}">{{ exercise.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Nivel</label>
+        <select name="level" class="form-control">
+            <option value="basic">Basico</option>
+            <option value="intermediate">Intermedio</option>
+            <option value="advanced">Avanzado</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <textarea name="description" rows="4" class="form-control"></textarea>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-action="create-plan">✨ Crear plan</button>
+</form>

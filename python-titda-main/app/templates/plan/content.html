@@ -1,0 +1,18 @@
+<div class="plan-card card border-info m-2" data-plan-id="{{ plan.id }}">
+
+     <div class="plan-card card-body" data-plan-id="{{ plan.id }}">
+         <div class="plan-content">
+             <h5 data-plan-name="{{ plan.name }}" class="card-title">{{ plan.name }}</h5>
+             <p data-plan-description="{{ plan.description }}" class="card-subtitle">{{ plan.description }}</p>
+             <p data-plan-level="{{ plan.level }}" class="card-text">{{ plan.level }}</p>
+             <div class="card-footer">
+                 <a href="/plans/{{ plan.id }}/actions" class="btn btn-primary">Acciones</a>
+                 <a class="btn btn-primary toggle-control">✍️ Editar</a>
+             </div>
+
+         </div>
+
+         {% include "plan/control.html" %}
+
+     </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="goal-card card border-info m-2" data-goal-id="{{ goal.id }}">
+     <div class="goal-card card-body" data-goal-id="{{ goal.id }}">
+         <div class="goal-content">
+             <h5 data-goal-name="{{ goal.name }}" class="card-title">{{ goal.name }}</h5>
+             <p data-goal-description="{{ goal.description }}" class="card-text">{{ goal.description }}</p>
+             <div class="card-footer">
+                 <a class="btn btn-primary toggle-control">✍️ Editar</a>
+             </div>
+         </div>
+
+         {% include "goal/control.html" %}
+     </div>
+</div>

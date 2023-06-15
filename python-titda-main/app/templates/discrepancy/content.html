@@ -1,0 +1,11 @@
+<div class="discrepancy-card card border-info m-2" data-discrepancy-id="{{ discrepancy.id }}">
+     <div class="discrepancy-card card-body" data-discrepancy-id="{{ discrepancy.id }}">
+         <div class="discrepancy-content">
+             <p data-discrepancy-description="{{ discrepancy.description }}" class="card-text">{{ discrepancy.description }}</p>
+             <div class="card-footer">
+                 <a class="btn btn-primary toggle-control">✍️ Editar</a>
+             </div>
+         </div>
+         {% include "discrepancy/control.html" %}
+     </div>
+</div>

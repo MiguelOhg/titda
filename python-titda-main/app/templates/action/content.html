@@ -1,0 +1,13 @@
+<div class="action-card card border-info m-2" data-action-id="{{ action.id }}">
+     <div class="action-card card-body" data-action-id="{{ action.id }}">
+         <div class="action-content">
+             <h5 data-action-name="{{ action.name }}" class="card-title">{{ action.name }}</h5>
+             <p data-action-description="{{ action.description }}" class="card-text">{{ action.description }}</p>
+             <div class="card-footer">
+                 <a class="btn btn-primary toggle-control">✍️ Editar</a>
+             </div>
+         </div>
+
+         {% include "action/control.html" %}
+     </div>
+</div>

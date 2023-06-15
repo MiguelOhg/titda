@@ -1,0 +1,356 @@
+# swagger.yml
+
+openapi: 3.0.0
+info:
+  title: "TITDA REST API"
+  description: "An API about system tutor intelligence"
+  version: "1.0.0"
+
+servers:
+  - url: "/api"
+
+components:
+  schemas:
+    Plan:
+      type: "object"
+      required:
+        - name
+      properties:
+        name:
+          type: "string"
+        level:
+          type: "string"
+        description:
+          type: "string"
+        exercise_id:
+          type: "string"
+    Action:
+      type: "object"
+      required:
+        - name
+      properties:
+        name:
+          type: "string"
+        description:
+          type: "string"
+        type:
+          type: "string"
+        value:
+          type: "string"
+        plan_id:
+          type: "string"
+        procedural_memory_id:
+          type: "string"
+    Goal:
+      type: "object"
+      required:
+        - name
+      properties:
+        name:
+          type: "string"
+        description:
+          type: "string"
+    Discrepancy:
+      type: "object"
+      required:
+        - description
+      properties:
+        description:
+          type: "string"
+        plan_id:
+          type: "string"
+  parameters:
+    id:
+      name: "id"
+      description: "id of the model"
+      in: path
+      required: True
+      schema:
+        type: "string"
+    plan_id:
+      name: "plan_id"
+      description: "id of the plan"
+      in: path
+      required: True
+      schema:
+        type: "string"
+    action_id:
+      name: "action_id"
+      description: "id of the action"
+      in: path
+      required: True
+      schema:
+        type: "string"
+    goal_id:
+      name: "goal_id"
+      description: "id of the goal"
+      in: path
+      required: True
+      schema:
+        type: "string"
+    discrepancy_id:
+      name: "discrepancy_id"
+      description: "id of the discrepancy"
+      in: path
+      required: True
+      schema:
+        type: "string"
+paths:
+  /plans:
+    get:
+      operationId: "services.plan.read_all"
+      tags:
+        - "Plan"
+      summary: "Read the list of plans"
+      responses:
+        "200":
+          description: "Successfully read plans list"
+  /plan:
+    post:
+      operationId: "services.plan.create"
+      tags:
+        - "Plan"
+      summary: "Create a plan"
+      requestBody:
+        description: "Plan to create"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "request"
+              $ref: "#/components/schemas/Plan"
+      responses:
+        "201":
+          description: "Successfully created person"
+  /plan/{plan_id}:
+    get:
+      operationId: "services.plan.read_one"
+      tags:
+        - "Plan"
+      summary: "Read one plan"
+      parameters:
+        - $ref: "#/components/parameters/plan_id"
+      responses:
+        "200":
+          description: "Successfully read plan"
+    put:
+      tags:
+        - "Plan"
+      operationId: "services.plan.update"
+      summary: "Update a plan"
+      parameters:
+        - $ref: "#/components/parameters/plan_id"
+      responses:
+        "200":
+          description: "Successfully updated plan"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "request"
+              $ref: "#/components/schemas/Plan"
+    delete:
+      tags:
+        - "Plan"
+      operationId: "services.plan.delete"
+      summary: "Delete a plan"
+      parameters:
+        - $ref: "#/components/parameters/plan_id"
+      responses:
+        "204":
+          description: "Successfully deleted plan"
+  /actions:
+    get:
+      operationId: "services.action.read_all"
+      tags:
+        - "Action"
+      summary: "Read the list of actions"
+      parameters:
+        - $ref: "#/components/parameters/plan_id"
+      responses:
+        "200":
+          description: "Successfully read actions list"
+  /action:
+    post:
+      operationId: "services.action.create"
+      tags:
+        - "Action"
+      summary: "Create a action"
+      requestBody:
+        description: "Action to create"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "request"
+              $ref: "#/components/schemas/Action"
+      responses:
+        "201":
+          description: "Successfully created action"
+  /action/{action_id}:
+    get:
+      operationId: "services.action.read_one"
+      tags:
+        - "Action"
+      summary: "Read one action"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read action"
+    put:
+      tags:
+        - "Action"
+      operationId: "services.action.update"
+      summary: "Update a action"
+      parameters:
+        - $ref: "#/components/parameters/action_id"
+      responses:
+        "200":
+          description: "Successfully updated action"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "request"
+              $ref: "#/components/schemas/Action"
+    delete:
+      tags:
+        - "Action"
+      operationId: "services.action.delete"
+      summary: "Delete a action"
+      parameters:
+        - $ref: "#/components/parameters/action_id"
+      responses:
+        "204":
+          description: "Successfully deleted action"
+  /goals:
+    get:
+      operationId: "services.goal.read_all"
+      tags:
+        - "Goal"
+      summary: "Read the list of goals"
+      parameters:
+        - $ref: "#/components/parameters/plan_id"
+      responses:
+        "200":
+          description: "Successfully read goals list"
+  /goal:
+    post:
+      operationId: "services.goal.create"
+      tags:
+        - "Goal"
+      summary: "Create a goal"
+      requestBody:
+        description: "Goal to create"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "request"
+              $ref: "#/components/schemas/Goal"
+      responses:
+        "201":
+          description: "Successfully created goal"
+  /goal/{goal_id}:
+    get:
+      operationId: "services.goal.read_one"
+      tags:
+        - "Goal"
+      summary: "Read one goal"
+      parameters:
+        - $ref: "#/components/parameters/goal_id"
+      responses:
+        "200":
+          description: "Successfully read goal"
+    put:
+      tags:
+        - "Goal"
+      operationId: "services.goal.update"
+      summary: "Update a goal"
+      parameters:
+        - $ref: "#/components/parameters/goal_id"
+      responses:
+        "200":
+          description: "Successfully updated goal"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "request"
+              $ref: "#/components/schemas/Goal"
+    delete:
+      tags:
+        - "Goal"
+      operationId: "services.goal.delete"
+      summary: "Delete a goal"
+      parameters:
+        - $ref: "#/components/parameters/goal_id"
+      responses:
+        "204":
+          description: "Successfully deleted goal"
+  /discrepancies:
+    get:
+      operationId: "services.discrepancy.read_all"
+      tags:
+        - "Discrepancy"
+      summary: "Read the list of discrepancies"
+      parameters:
+        - $ref: "#/components/parameters/plan_id"
+      responses:
+        "200":
+          description: "Successfully read goals list"
+  /discrepancy:
+    post:
+      operationId: "services.discrepancy.create"
+      tags:
+        - "Discrepancy"
+      summary: "Create a discrepancy"
+      requestBody:
+        description: "Discrepancy to create"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "request"
+              $ref: "#/components/schemas/Discrepancy"
+      responses:
+        "201":
+          description: "Successfully created discrepancy"
+  /discrepancy/{discrepancy_id}:
+    get:
+      operationId: "services.discrepancy.read_one"
+      tags:
+        - "Discrepancy"
+      summary: "Read one discrepancy"
+      parameters:
+        - $ref: "#/components/parameters/discrepancy_id"
+      responses:
+        "200":
+          description: "Successfully read discrepancy"
+    put:
+      tags:
+        - "Discrepancy"
+      operationId: "services.discrepancy.update"
+      summary: "Update a discrepancy"
+      parameters:
+        - $ref: "#/components/parameters/discrepancy_id"
+      responses:
+        "200":
+          description: "Successfully updated discrepancy"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "request"
+              $ref: "#/components/schemas/Discrepancy"
+    delete:
+      tags:
+        - "Discrepancy"
+      operationId: "services.discrepancy.delete"
+      summary: "Delete a discrepancy"
+      parameters:
+        - $ref: "#/components/parameters/discrepancy_id"
+      responses:
+        "204":
+          description: "Successfully deleted discrepancy"
